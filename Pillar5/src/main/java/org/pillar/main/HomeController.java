@@ -4,6 +4,9 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import org.hibernate.Session;
+import org.hibernate.cfg.AnnotationConfiguration;
+import org.pillar.entity.States;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -29,11 +32,24 @@ public class HomeController {
 		Date date = new Date();
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
 		
+		
 		String formattedDate = dateFormat.format(date);
 		
 		model.addAttribute("serverTime", formattedDate );
 		
 		return "home";
+	}
+	
+	@RequestMapping("/db")
+	public void db_check_area(){
+		
+		Session s = new AnnotationConfiguration().configure().buildSessionFactory().openSession();
+		States s1 = new States("Tamil NAdu");
+		s.beginTransaction();
+		s.save(s1);
+		
+		s.getTransaction().commit();
+		s.close();
 	}
 	
 }
