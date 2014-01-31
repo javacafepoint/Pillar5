@@ -23,6 +23,19 @@ public class Area {
 	private String areaName;
 	private States state;
 	
+	
+	
+	public Area(String areaName) {
+		super();
+		this.areaName = areaName;
+	}
+
+	public Area(String areaName, States state) {
+		super();
+		this.areaName = areaName;
+		this.state = state;
+	}
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	public int getAreaId() {

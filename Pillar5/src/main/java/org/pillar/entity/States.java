@@ -27,6 +27,16 @@ public class States {
 	private String stateName;
 	private Set<Area> areas = new HashSet<Area>();
 	
+	
+	public States(String stateName, Set<Area> areas) {
+		super();
+		this.stateName = stateName;
+		this.areas = areas;
+	}
+	public States(String stateName) {
+		super();
+		this.stateName = stateName;
+	}
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	public int getStateId() {
