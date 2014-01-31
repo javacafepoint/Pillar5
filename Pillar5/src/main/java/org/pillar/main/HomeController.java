@@ -48,27 +48,5 @@ public class HomeController {
 		return "Register";
 	}
 
-	@RequestMapping("testingdb")
-	public void db_check_area() {
-		Session s = new AnnotationConfiguration().configure()
-				.buildSessionFactory().openSession();
-		try {
-
-			States s1 = new States("Tamil Nadu");
-
-			Area a1 = new Area("Chennai", s1);
-
-			s.beginTransaction();
-			s.saveOrUpdate(s1);
-			s.saveOrUpdate(a1);
-
-			s.getTransaction().commit();
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			s.close();
-		}
-
-	}
 
 }
