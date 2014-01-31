@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -14,6 +15,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.Index;
+import org.hibernate.type.TrueFalseType;
 import org.hibernate.validator.NotEmpty;
 import org.hibernate.validator.NotNull;
 import org.hibernate.validator.Size;
@@ -49,6 +51,7 @@ public class States {
 	@NotEmpty
 	@NotNull
 	@Size(min=3,message="State Name Cannot be so small")
+	@Column(unique=true)
 	public String getStateName() {
 		return stateName;
 	}
@@ -56,7 +59,7 @@ public class States {
 		this.stateName = stateName;
 	}
 	
-	@OneToMany(cascade=CascadeType.ALL,fetch = FetchType.LAZY)
+	@OneToMany(cascade=CascadeType.ALL,fetch = FetchType.LAZY,mappedBy="state")
 	public Set<Area> getAreas() {
 		return areas;
 	}

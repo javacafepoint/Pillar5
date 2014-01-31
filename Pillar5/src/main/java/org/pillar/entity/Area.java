@@ -1,5 +1,6 @@
 package org.pillar.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -40,6 +41,7 @@ public class Area {
 	
 	@NotEmpty
 	@NotNull
+	@Column(unique=true)
 	@Size(min=3,message="Area Name Cannot be so small")
 	public String getAreaName() {
 		return areaName;
