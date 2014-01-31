@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.cfg.AnnotationConfiguration;
 import org.pillar.entity.States;
 import org.slf4j.Logger;
@@ -50,10 +51,10 @@ public class HomeController {
 		
 		Session s = new AnnotationConfiguration().configure().buildSessionFactory().openSession();
 		States s1 = new States("Tamil NAdu");
-		s.beginTransaction();
+		Transaction trans = s.beginTransaction();
 		s.save(s1);
 		
-		s.getTransaction().commit();
+		trans.commit();
 		s.close();
 	}
 	
