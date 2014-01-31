@@ -44,7 +44,8 @@ public class HomeController {
 	public String register(){
 		return "Register";
 	}
-	@RequestMapping("/db")
+	
+	@RequestMapping("testingdb")
 	public void db_check_area(){
 		
 		Session s = new AnnotationConfiguration().configure().buildSessionFactory().openSession();
