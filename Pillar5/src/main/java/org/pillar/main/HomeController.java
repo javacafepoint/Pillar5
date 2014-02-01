@@ -7,6 +7,7 @@ import java.util.Locale;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.AnnotationConfiguration;
+import org.pillar.entity.Area;
 import org.pillar.entity.States;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,42 +21,32 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 public class HomeController {
-	
-	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
-	
+
+	private static final Logger logger = LoggerFactory
+			.getLogger(HomeController.class);
+
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
-		
+
 		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-		
-		
+		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG,
+				DateFormat.LONG, locale);
+
 		String formattedDate = dateFormat.format(date);
-		
-		model.addAttribute("serverTime", formattedDate );
-		
+
+		model.addAttribute("serverTime", formattedDate);
+
 		return "home";
 	}
-	
-	@RequestMapping(value="register")
-	public String register(){
+
+	@RequestMapping(value = "register")
+	public String register() {
 		return "Register";
 	}
-	
-	@RequestMapping("testingdb")
-	public void db_check_area(){
-		
-		Session s = new AnnotationConfiguration().configure().buildSessionFactory().openSession();
-		States s1 = new States("Tamil NAdu");
-		Transaction trans = s.beginTransaction();
-		s.save(s1);
-		
-		trans.commit();
-		s.close();
-	}
-	
+
+
 }
