@@ -48,7 +48,7 @@ public class Area {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "stateId", nullable = false)
+	@JoinColumn(name = "stateId")
 	public States getState() {
 		return state;
 	}
