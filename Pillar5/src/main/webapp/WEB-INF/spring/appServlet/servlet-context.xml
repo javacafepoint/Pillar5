@@ -20,9 +20,13 @@
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
-	
+
+	<beans:bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<beans:property name="basename" value="/WEB-INF/views" />
+		<beans:property name="cacheSeconds" value="3000" />
+	</beans:bean>	
 	<context:component-scan base-package="org.pillar" />
 	
-	
+	<beans:bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>
 	
 </beans:beans>

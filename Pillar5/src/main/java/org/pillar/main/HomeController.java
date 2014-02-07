@@ -6,6 +6,12 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+import javax.validation.Validation;
+import javax.validation.Validator;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -18,8 +24,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * Handles requests for the application home page.
@@ -74,16 +85,41 @@ public class HomeController {
 		
 		return "TestPage";
 	}
-
-	@RequestMapping(value = "register")
-	public String register(ModelMap m) {
-		Session s = new AnnotationConfiguration().configure().buildSessionFactory().openSession();
-		s.beginTransaction();
-		m.addAttribute("register", new RegisterBean());
-		s.save(m);
-		s.close();
-		return "Register";
+	
+	@RequestMapping(value = "register",method=RequestMethod.GET)
+	public ModelAndView rrr(){
+		
+		return new ModelAndView("Register", "reg", new RegisterBean());
 	}
 
-
+	@RequestMapping(value = "register",method=RequestMethod.POST)
+	public ModelAndView register(@ModelAttribute("reg") @Valid RegisterBean reg, HttpServletRequest request, BindingResult result, ModelMap model) {
+		Session s = new AnnotationConfiguration().configure().buildSessionFactory().openSession();
+		s.beginTransaction();
+		try{
+		reg.setFirstName(request.getParameter("firstname"));
+		reg.setLastName(request.getParameter("lastname"));
+		reg.setMobile(request.getParameter("mobile"));
+		reg.setEmail(request.getParameter("email"));
+		reg.setGender(request.getParameter("gender"));
+		reg.setState(request.getParameter("state"));
+		reg.setCity(request.getParameter("city"));
+		s.saveOrUpdate(reg);
+		s.getTransaction().commit();
+		Validator valid = Validation.buildDefaultValidatorFactory().getValidator();
+		valid.validate(reg);
+		model.addAttribute("reg", new RegisterBean());
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			
+		}finally{
+		s.close();
+		}
+		if(result.hasErrors()){
+			return new ModelAndView("Register");
+		}else{
+			return new ModelAndView("success");
+		}
+	}
 }

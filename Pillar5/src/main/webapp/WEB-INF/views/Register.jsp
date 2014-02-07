@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+	<%@ taglib prefix="f" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -21,9 +22,11 @@ border-style
 :solid;
 }
 </style>
+<jsp:useBean id="registerBean" class="org.pillar.entity.RegisterBean" scope="page" />
+<jsp:setProperty property="*" name="registerBean"/>
 </head>
 <body>
-	<form action="register" method="post">
+	<f:form action="register" method="post" commandName="reg">
 		<br>
 		<br>
 		<div
@@ -35,29 +38,27 @@ border-style
 		<div
 			style="align: center; height: 150%; width: 200%; background-color: #FFFFCC"
 			class="groove">
-			<br> <b>First Name: </b> <input type="text" name="firstname"
-				id="firstname" style="width: 80%; height: 50%;" class="solid"><br>
-			<br> <b>Last Name: </b> <input type="text" name="lastname"
-				id="lastname" style="width: 80%; height: 50%;" class="solid"><br>
-			<br> <b>Mobile:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b> <input
-				type="text" name="mobile" id="mobile"
-				style="width: 80%; height: 50%;" class="solid"><br> <br>
-			<b>Email: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b><input
-				type="text" name="email" id="email" style="width: 80%; height: 50%;"
-				class="solid"><br> <br> <b>Gender: &nbsp;&nbsp;&nbsp;</b><input
+			<br> <b>First Name: </b> <f:input path="firstName" style="width: 80%; height: 50%;" class="solid" />
+				<f:errors path="firstName"/><br>
+			<br> <b>Last Name: </b> <f:input path="lastName" style="width: 80%; height: 50%;" class="solid" />
+				<f:errors path="lastName"/><br>
+			<br> <b>Mobile:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b> <f:input path="mobile" style="width: 80%; height: 50%;" class="solid" />
+			<f:errors path="mobile"/><br> <br>
+			<b>Email: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b><f:input path="email" style="width: 80%; height: 50%;" class="solid" />
+			<f:errors path="email"/><br> <br> <b>Gender: &nbsp;&nbsp;&nbsp;</b><input
 				type="radio" name="gender" onMouseDown="this.__chk = this.checked"
-				onClick="if (this.__chk) this.checked = false">Male
+				onClick="if (this.__chk) this.checked = false" value="male">Male
 			&nbsp;&nbsp;&nbsp;<input type="radio" name="gender"
 				onMouseDown="this.__chk = this.checked"
-				onClick="if (this.__chk) this.checked = false">Female<br><br>
-				<b>State: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b> <select>
+				onClick="if (this.__chk) this.checked = false" value="female">Female<br><br>
+				<b>State: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b> <select name="state">
 				<option >---Select---</option>
-				<option value="jandk">Jammu & Kashmir</option>
+				<option value="jandk">Jammu and Kashmir</option>
 				<option value="himachalpradesh">Himachal Pradesh</option>
 				<option value="tamilnadu">Tamil Nadu</option>
 				<option value="karnataka">Karnataka</option>
 				</select><br><br>
-				<b>City: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b> <select>
+				<b>City: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b> <select name="city">
 				<option >---Select---</option>
 				<option value="Chennai">Chennai</option>
 				<option value="bangalore">Bangalore</option>
@@ -69,9 +70,9 @@ border-style
 		<div align="center"
 			style="align: center; background-color: #FFCCCC; height: 150%; width: 200%;"
 			class="groove">
-			<input type="submit" value="Register"
+			<input type="submit" value="Register" name="register"
 				style="text-transform: uppercase;">
 		</div>
-	</form>
+	</f:form>
 </body>
 </html>

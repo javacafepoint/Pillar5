@@ -1,6 +1,7 @@
 package org.pillar.entity;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -8,15 +9,18 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.NotEmpty;
 import org.hibernate.validator.NotNull;
 import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.NumberFormat;
 
 @Entity
-@Table(name="Users")
+@Table(name="users")
+@UniqueConstraint(columnNames = { "mobile", "email" })
 public class RegisterBean {
 
 	@Id
@@ -28,15 +32,16 @@ public class RegisterBean {
 	private String lastName;
 	
 	@NotEmpty
-	@NotNull
 	@NumberFormat(pattern="##########")
-	@Size(min=10, max=10, message="Mobile number should not be empty")
-	private int mobile;
+	@Size(message="Mobile number cannot be less than 10 characters.")
+	private String mobile;
 	
 	@NotEmpty
-	@Email(message="Email cannot be empty")
+	@Column(unique=true)
+	@Email(message="Email has to be in proper format")
 	private String email;
 	
+	@AssertTrue
 	private String gender;
 	
 	@NotEmpty(message="Select one from the list...")
@@ -69,11 +74,11 @@ public class RegisterBean {
 		this.lastName = lastName;
 	}
 
-	public int getMobile() {
+	public String getMobile() {
 		return mobile;
 	}
 
-	public void setMobile(int mobile) {
+	public void setMobile(String mobile) {
 		this.mobile = mobile;
 	}
 
